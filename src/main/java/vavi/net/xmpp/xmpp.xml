@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="Shift_JIS" ?>
+
+<digester-rules>
+
+  <!-- iq -->
+  <object-create-rule pattern="iq" classname="Iq" />
+	
+  <call-method-rule pattern="iq/id" methodname="setId" paramcount="0" />
+  <call-method-rule pattern="iq/type" methodname="setType" paramcount="0" />
+  <call-method-rule pattern="iq/to" methodname="setTo" paramcount="0" />
+
+  <!-- stream -->
+  <object-create-rule pattern="stream" classname="Stream" />
+
+  <call-method-rule pattern="status/status" methodname="setStatus" paramcount="0" />
+  <call-method-rule pattern="status/from" methodname="setFrom" paramcount="0" />
+  <call-method-rule pattern="status/type" methodname="setType" paramcount="0" />
+  <call-method-rule pattern="status/to" methodname="setTo" paramcount="0" />
+
+  <!-- presense -->
+  <object-create-rule pattern="presence" classname="Presence" />
+
+  <!-- vCard -->
+  <object-create-rule pattern="iq/vCard" classname="VCard" />
+
+  <call-method-rule pattern="iq/vCard/surName" methodname="setSurName" paramcount="0" />
+  <call-xmethod-rule pattern="iq/vCard/firstName" methodname="setFirstName" paramcount="0" />
+  <call-method-rule pattern="iq/vCard/url" methodname="setUrl" paramcount="0" />
+  <call-method-rule pattern="iq/vCard/bday" methodname="setBday" paramcount="0" />
+  <call-method-rule pattern="iq/vCard/orgName" methodname="setOrgName" paramcount="0" />
+  <call-method-rule pattern="iq/vCard/orgUnit" methodname="setOrgUnit" paramcount="0" />
+  <call-method-rule pattern="iq/vCard/title" methodname="setTitle" paramcount="0" />
+  <call-method-rule pattern="iq/vCard/role" methodname="setRole" paramcount="0" />
+  <call-method-rule pattern="iq/vCard/phone" methodname="setPhone" paramcount="0" />
+  <call-method-rule pattern="iq/vCard/fax" methodname="setFax" paramcount="0" />
+  <call-method-rule pattern="iq/vCard/cell" methodname="setCell" paramcount="0" />
+  <call-method-rule pattern="iq/vCard/extAdd" methodname="setExtAdd" paramcount="0" />
+  <call-method-rule pattern="iq/vCard/region" methodname="setRegion" paramcount="0" />
+  <call-method-rule pattern="iq/vCard/street" methodname="setStreet" paramcount="0" />
+  <call-method-rule pattern="iq/vCard/locality" methodname="setLocality" paramcount="0" />
+  <call-method-rule pattern="iq/vCard/pcode" methodname="setPcode" paramcount="0" />
+  <call-method-rule pattern="iq/vCard/ctry" methodname="setCtry" paramcount="0" />
+  <call-method-rule pattern="iq/vCard/email" methodname="setEmail" paramcount="0" />
+  <call-method-rule pattern="iq/vCard/jabberId" methodname="setJabberId" paramcount="0" />
+  <call-method-rule pattern="iq/vCard/desc" methodname="setDesc" paramcount="0" />
+
+</digester-rules>
+
+<!-- -->
