@@ -21,7 +21,7 @@
         <configuration>
           <source>1.5</source>
           <target>1.5</target>
-          <encoding>Windows-31J</encoding>
+          <encoding>UTF-8</encoding>
           <compilerVersion>1.5</compilerVersion>
         </configuration>
       </plugin>
@@ -46,7 +46,7 @@
   	<dependency>
   		<groupId>vavi</groupId>
   		<artifactId>vavi-commons</artifactId>
-  		<version>1.0.0</version>
+  		<version>1.0.4</version>
   		<optional>false</optional>
   	</dependency>
   	<dependency>

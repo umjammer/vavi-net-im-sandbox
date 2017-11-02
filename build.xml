@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="Shift_JIS"?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <!-- ////////////////////////////////////////////////////////////////////// -->
 <!-- Copyright (c) 2004 by Naohide Sano, All rights reserved.               -->
@@ -14,7 +14,7 @@
 
 <project default="run2" basedir=".">
 
-<!-- ƒNƒ‰ƒXƒpƒX‚Ì’è‹` -->
+<!-- ã‚¯ãƒ©ã‚¹ãƒ‘ã‚¹ã®å®šç¾© -->
 <path id="project.class.path">
   <pathelement location="." />
   <pathelement location="../.." />
@@ -27,10 +27,10 @@
   </fileset>
 </path>
 
-<!-- ƒ^[ƒQƒbƒg‚Ì’è‹` -->
+<!-- ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®å®šç¾© -->
 
 <!-- clean -->
-<target name="clean" description="ƒrƒ‹ƒhŠÂ‹«‚ÌƒNƒŠƒA">
+<target name="clean" description="ãƒ“ãƒ«ãƒ‰ç’°å¢ƒã®ã‚¯ãƒªã‚¢">
   <delete>
     <fileset dir=".">
       <include name="*.class" />
@@ -39,13 +39,13 @@
 </target>
 
 <!-- javac vavi.util -->
-<target name="compile.vavi.util" description="ƒRƒ“ƒpƒCƒ‹ vavi.util">
+<target name="compile.vavi.util" description="ã‚³ãƒ³ãƒ‘ã‚¤ãƒ« vavi.util">
   <ant dir="../../vavi/util" target="compile" />
 </target>
 
 <!-- javac supports -->
 <target name="compile.supports" depends="compile.vavi.util"
-        description="ƒRƒ“ƒpƒCƒ‹ src/**/*.java">
+        description="ã‚³ãƒ³ãƒ‘ã‚¤ãƒ« src/**/*.java">
   <javac debug="on" deprecation="on">
     <classpath refid="project.class.path" />
     <include name="**/*.java" />
@@ -56,7 +56,7 @@
 </target>
 
 <!-- javac -->
-<target name="compile" depends="compile.supports" description="ƒRƒ“ƒpƒCƒ‹">
+<target name="compile" depends="compile.supports" description="ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«">
   <javac debug="on" deprecation="on">
     <classpath refid="project.class.path" />
     <include name="*.java" />

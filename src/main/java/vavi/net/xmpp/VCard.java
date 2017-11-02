@@ -84,7 +84,7 @@ public class VCard extends Xmpp {
                 in.read(binVal, l, length - l);
             }
         } catch (IOException e) {
-            throw (RuntimeException) new IllegalStateException().initCause(e);
+            throw new IllegalStateException(e);
         }
     }
 

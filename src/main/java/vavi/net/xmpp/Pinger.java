@@ -59,17 +59,17 @@ class Pinger {
     /** */
     private GenericSupport gs = new GenericSupport();
 
-    /** GenericListener ‚ğ’Ç‰Á‚µ‚Ü‚·D */
+    /** GenericListener ã‚’è¿½åŠ ã—ã¾ã™ï¼ */
     public void addGenericListener(GenericListener l) {
         gs.addGenericListener(l);
     }
 
-    /** GenericListener ‚ğíœ‚µ‚Ü‚·D */
+    /** GenericListener ã‚’å‰Šé™¤ã—ã¾ã™ï¼ */
     public void removeGenericListener(GenericListener l) {
         gs.removeGenericListener(l);
     }
 
-    /** ”Ä—pƒCƒxƒ“ƒg‚ğ”­s‚µ‚Ü‚·D */
+    /** æ±ç”¨ã‚¤ãƒ™ãƒ³ãƒˆã‚’ç™ºè¡Œã—ã¾ã™ï¼ */
     private void fireEvent(Object source, String name) {
         gs.fireEventHappened(new GenericEvent(source, name));
     }

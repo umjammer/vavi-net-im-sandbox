@@ -57,7 +57,7 @@ public abstract class Xmpp implements Serializable {
             return outputWriter.toString();
         } catch (Exception e) {
 Debug.printStackTrace(e);
-	        throw (RuntimeException) new IllegalStateException().initCause(e);
+	        throw new IllegalStateException(e);
         }
     }
 }

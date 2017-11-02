@@ -309,7 +309,7 @@ System.err.println("Querying reg. info.");
         try {
             md = MessageDigest.getInstance("SHA");
         } catch (NoSuchAlgorithmException e) {
-            throw (RuntimeException) new IllegalStateException().initCause(e);
+            throw new IllegalStateException(e);
         }
         md.update((streamId + password).getBytes());
         byte[] uid = md.digest();
