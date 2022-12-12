@@ -10,7 +10,7 @@ jabber
 
 ## TODO
 
-  * XML parser jaxp 化
+  * XML parser jaxp-nize
   * vavi IM compliant
 
 ```
