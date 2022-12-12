@@ -182,7 +182,7 @@ public class Iq extends Xmpp {
         presence.setType("subscribe");
         presence.setStatus(reason);
 
-        return iq.toString() + presence.toString();
+        return iq.toString() + presence;
     }
 
     /** */
@@ -305,7 +305,7 @@ System.err.println("Querying reg. info.");
 
     /** */
     private static String getDigestPassword(String streamId, String password) {
-        MessageDigest md = null;
+        MessageDigest md;
         try {
             md = MessageDigest.getInstance("SHA");
         } catch (NoSuchAlgorithmException e) {
@@ -338,7 +338,7 @@ System.err.println("Querying reg. info.");
         if (type.equals("set")) {
         } else if (type.equals("get")) {
             if (getChild() != null) {
-                String nameSpace = ((Query) getChild()).getXmlns();
+                String nameSpace = getChild().getXmlns();
                 if (nameSpace.equals("jabber:iq:version")) {
                     Iq newIq = new Iq();
                     if (id != null) {
@@ -400,7 +400,7 @@ System.out.println("Disco request recieved.");
                                                    jc.password,
                                                    jc.getUserName()));
                 }
-                String namespace = ((Query) getChild()).getXmlns();
+                String namespace = getChild().getXmlns();
                 if (namespace.equals("jabber:iq:roster")) {
                     jc.roster = new Roster((Query) getChild());
                 }
@@ -416,7 +416,7 @@ System.err.println("SUBSCR");
                 }
             }
         } if (type.equals("error")) {
-System.err.println("ERROR During auth: " + toString());
+System.err.println("ERROR During auth: " + this);
             String error = getError();
             if (error != null) {
 System.err.println(error);

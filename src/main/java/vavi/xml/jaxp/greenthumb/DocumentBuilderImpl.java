@@ -43,13 +43,13 @@ public class DocumentBuilderImpl extends DocumentBuilder {
     private ErrorHandler eh = null;
     /** */
 //    private Object domParser = null;
-    private MinXMLParser domParser = null;
+    private MinXMLParser domParser;
 
     /** */
     @SuppressWarnings("unused")
     private boolean namespaceAware = false;
     /** */
-    private boolean validating = false;
+    private boolean validating;
 
     /** */
     DocumentBuilderImpl(DocumentBuilderFactory dbf)
@@ -69,7 +69,7 @@ public class DocumentBuilderImpl extends DocumentBuilder {
             // Validation   
             validating = dbf.isValidating();
             String validation = "http://xml.org/sax/features/validation";
-            features.put(validation, new Boolean(validating));
+            features.put(validation, validating);
 //        } catch (SAXException e) {
             // Handles both SAXNotSupportedException, SAXNotRecognizedException
 //            throw new ParserConfigurationException(e.getMessage());
@@ -77,7 +77,7 @@ public class DocumentBuilderImpl extends DocumentBuilder {
     }
 
     /** */
-    private Map<String, Boolean> features = new HashMap<String, Boolean>();
+    private Map<String, Boolean> features = new HashMap<>();
     
     /** */
     public Document newDocument() {

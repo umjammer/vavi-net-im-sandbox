@@ -151,7 +151,7 @@ public class MinXMLParser implements org.xml.sax.Parser {
 
         if (!startTagStarted) {
             if ('<' != skipWhitespace(r)) {
-                reportError("Expecting a \'<\' at document start");
+                reportError("Expecting a '<' at document start");
             }
 
             c = readChar(r);
@@ -226,7 +226,7 @@ public class MinXMLParser implements org.xml.sax.Parser {
             }
         // fallthrough;
         default:
-            reportError("Expecting a \'<\' or whitespace at document start");
+            reportError("Expecting a '<' or whitespace at document start");
         }
 
         return new InputStreamReader(in, enc);
@@ -250,15 +250,15 @@ public class MinXMLParser implements org.xml.sax.Parser {
         nameBuf.setLength(0);
 
         if (!isNameStartChar((char) c)) {
-            reportError("Invalid name start char: \'" + (char) c + "\'");
+            reportError("Invalid name start char: '" + (char) c + "'");
         }
 
         nameBuf.append((char) c);
 
         while ('>' != (c = readChar(r))) {
             if (!isNameChar((char) c)) {
-                reportError("Invalid name char \'" + (char) c +
-                            "\' after tag name: " + nameBuf);
+                reportError("Invalid name char '" + (char) c +
+                        "' after tag name: " + nameBuf);
             }
 
             nameBuf.append((char) c);
@@ -275,17 +275,17 @@ public class MinXMLParser implements org.xml.sax.Parser {
 
         while ('>' != (c = readChar(r))) {
             if (!isNameChar((char) c)) {
-                reportError("Invalid name char \'" + (char) c +
-                            "\' in end tag \'" + nameBuf +
-                            "\' for start tag \'" + name + "\'");
+                reportError("Invalid name char '" + (char) c +
+                        "' in end tag '" + nameBuf +
+                        "' for start tag '" + name + "'");
             }
 
             nameBuf.append((char) c);
         }
 
         if (!name.equals(nameBuf.toString())) {
-            reportError("End tag \'" + nameBuf +
-                        "\' does not match start tag: \'" + name + "\'");
+            reportError("End tag '" + nameBuf +
+                    "' does not match start tag: '" + name + "'");
         }
 
         handler.endElement(name);
@@ -317,7 +317,7 @@ public class MinXMLParser implements org.xml.sax.Parser {
 
                     if ('&' == c) {
                         if ('#' != readChar(r)) {
-                            reportError("Expecting \'#\' in char reference");
+                            reportError("Expecting '#' in char reference");
                         }
 
                         // Read the char ref
@@ -331,7 +331,7 @@ public class MinXMLParser implements org.xml.sax.Parser {
                         }
 
                         if (';' != c) {
-                            reportError("Expecting \';\' after char reference: &#" +
+                            reportError("Expecting ';' after char reference: &#" +
                                         charRefBuf);
                         }
 
@@ -349,7 +349,7 @@ public class MinXMLParser implements org.xml.sax.Parser {
                                         charRefBuf + ";");
                         }
                     } else if ('>' == c) {
-                        reportError("Can\'t have a \'>\' in char data");
+                        reportError("Can't have a '>' in char data");
                     } else {
                         appendContent((char) c);
                     }

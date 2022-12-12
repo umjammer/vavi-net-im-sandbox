@@ -19,7 +19,7 @@ import java.util.Map;
 public class Roster {
 
     /** */
-    private Map<String, Group> groups = new HashMap<String, Group>();
+    private Map<String, Group> groups = new HashMap<>();
 
     /** */
     public Group getGroup(String name) {

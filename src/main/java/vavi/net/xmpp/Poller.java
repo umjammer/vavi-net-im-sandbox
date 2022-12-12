@@ -12,6 +12,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 
 
 /**
@@ -26,8 +27,8 @@ class Poller extends Thread {
 
     private boolean keepPolling = true;
     private int pollingInterval = 2500;
-    private final int minPollingInterval = 2500;
-    private final int maxPollingInterval = 30000;
+    private static final int minPollingInterval = 2500;
+    private static final int maxPollingInterval = 30000;
     private URL pollingURL;
     private String sessionCookie;
 
@@ -66,13 +67,13 @@ System.out.println("URL ist not a HTTP URL");
         // output session cookie "0" for new connection
         OutputStream out = urlConn.getOutputStream();
         if (sessionCookie == null) { // new session, no cookie yet
-            out.write("0,".getBytes("UTF8"));
+            out.write("0,".getBytes(StandardCharsets.UTF_8));
         } else { // existing session and cookie
-            out.write((sessionCookie + ",").getBytes("UTF8"));
+            out.write((sessionCookie + ",").getBytes(StandardCharsets.UTF_8));
         }
         // do we have to send real content?
         if (send != null) {
-            out.write(send.getBytes("UTF8"));
+            out.write(send.getBytes(StandardCharsets.UTF_8));
         }
         // flush and close the output so that the receiver gets an EOF
         out.flush();
@@ -81,7 +82,7 @@ System.out.println("URL ist not a HTTP URL");
         // read the new session cookie
         sessionCookie = urlConn.getHeaderField("Set-Cookie");
         if (sessionCookie != null) {
-            if (sessionCookie.substring(0, 3).equals("ID=")) {
+            if (sessionCookie.startsWith("ID=")) {
                 sessionCookie = sessionCookie.substring(3);
             }
             int index = sessionCookie.indexOf(';');
@@ -91,7 +92,7 @@ System.out.println("URL ist not a HTTP URL");
         }
         // check HTTP response code (should be 200)
         if (urlConn.getResponseCode() != HttpURLConnection.HTTP_OK) {
-System.out.println("HTTP response code is: " + (new Integer(urlConn.getResponseCode())).toString());
+            Integer.toString(urlConn.getResponseCode());
             disconnect();
         }
         // is it an error reply?
@@ -107,7 +108,7 @@ System.out.println("Got session cookie: " + sessionCookie);
         byte[] b = new byte[1024];
         while (-1 != (count = in.read(b, 0, 1024))) {
             if (count > 0) {
-                String resp = new String(b, 0, count, "UTF8");
+                String resp = new String(b, 0, count, StandardCharsets.UTF_8);
                 bytesReceived += count;
 // TODO                jc.dataRecieved(resp);
             } else { // we have to wait a bit for the reply
