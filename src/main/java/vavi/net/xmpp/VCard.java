@@ -7,9 +7,9 @@
 package vavi.net.xmpp;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,7 +76,7 @@ public class VCard extends Xmpp {
     public VCard() {
         try {
             File f = new File(fotoString);
-            InputStream in = new FileInputStream(f);
+            InputStream in = Files.newInputStream(f.toPath());
             int length = (int) f.length();
             binVal = new byte[length];
             int l = 0;
@@ -392,7 +392,7 @@ public class VCard extends Xmpp {
         }
     }
 
-    List<VCard.Tel> tels = new ArrayList<VCard.Tel>();
+    List<VCard.Tel> tels = new ArrayList<>();
 
     List<VCard.Tel> getTels() {
         return tels;

@@ -15,6 +15,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -135,7 +136,7 @@ public class JabberConnection implements Runnable {
         state = 0;
 
         //
-        Socket socket = null;
+        Socket socket;
         if (!useSSL) {
             socket = new Socket(server, port);
         } else {
@@ -143,7 +144,7 @@ public class JabberConnection implements Runnable {
         }
         in = socket.getInputStream();
         OutputStream os = socket.getOutputStream();
-        out = new BufferedWriter(new OutputStreamWriter(os, "UTF8"));
+        out = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
 
         //
         pinger = new Pinger(socket);
@@ -392,16 +393,15 @@ System.err.println("Querying auth.");
     }
 
     /** */
-    List<Chat> groupChats = new ArrayList<Chat>();
+    List<Chat> groupChats = new ArrayList<>();
 
     /** */
-    List<Chat> privateChats = new ArrayList<Chat>();
+    List<Chat> privateChats = new ArrayList<>();
 
     /** */
     Chat getChannelFor(String jid) {
         String channel = exCN(jid);
-        for (int i = 0; i < groupChats.size(); i++) {
-            Chat gc = groupChats.get(i);
+        for (Chat gc : groupChats) {
             if (gc.getName().equals(channel)) {
                 return gc;
             }
@@ -413,8 +413,7 @@ System.err.println("Querying auth.");
     Chat getChat(String name) {
 System.err.println("###### displaying in groupchat");
 	Chat p = null;
-        for (int i = 0; i < groupChats.size(); i++) {
-            Chat gc = groupChats.get(i);
+        for (Chat gc : groupChats) {
             if (gc.getName().equals(name)) {
                 p = gc;
                 break;
@@ -437,8 +436,7 @@ System.out.println("##### GCP created.");
                         String thread) {
 System.err.println("###### displaying in privatechat");
         Chat p = null;
-        for (int i = 0; i < privateChats.size(); i++) {
-            Chat gc = privateChats.get(i);
+        for (Chat gc : privateChats) {
             if (gc.getName().equals(name)) {
                 p = gc;
                 break;
@@ -462,8 +460,7 @@ System.out.println("##### GCP created.");
 
     /** */
     boolean isChat(String jid) {
-        for (int i = 0; i < groupChats.size(); i++) {
-            Chat pc = groupChats.get(i);
+        for (Chat pc : groupChats) {
             if (pc.getName().equals(jid) & pc.getType().equals("groupChat")) {
                 return true;
             }
@@ -473,8 +470,7 @@ System.out.println("##### GCP created.");
 
     /** */
     boolean isPrivateChat(String jid) {
-        for (int i = 0; i < privateChats.size(); i++) {
-            Chat pc = privateChats.get(i);
+        for (Chat pc : privateChats) {
             if (pc.getName().equals(jid) & pc.getType().equals("chat")) {
                 return true;
             }
@@ -483,14 +479,14 @@ System.out.println("##### GCP created.");
     }
 
     /** */
-    private List<Contact> contacts = new ArrayList<Contact>();
+    private List<Contact> contacts = new ArrayList<>();
 
     /** */
     private List<Contact> getContactsFor(String jid){
-        List<Contact> v1 = new ArrayList<Contact>();
+        List<Contact> v1 = new ArrayList<>();
         Contact c2;
-        for (int i = 0; i < contacts.size(); i++) {
-            c2 = contacts.get(i);
+        for (Contact contact : contacts) {
+            c2 = contact;
             if (c2.getJid().startsWith(jid)) {
                 v1.add(c2);
             }
@@ -499,7 +495,7 @@ System.out.println("##### GCP created.");
     }
 
     /** */
-    List<Message> messageList = new ArrayList<Message>();
+    List<Message> messageList = new ArrayList<>();
 
     /** */
     private void sendPresence() throws IOException {
@@ -522,7 +518,7 @@ System.out.println("##### GCP created.");
     private void sendPresence(String to, String status, String show)
         throws IOException {
 
-        String result = null;
+        String result;
         Presence presence = new Presence();
         presence.setTo(to);
         presence.setStatus(status);
@@ -546,17 +542,14 @@ System.out.println("##### GCP created.");
     }
 
     /** */
-    private GenericListener defaultListener = new GenericListener() {
-        public void eventHappened(GenericEvent ev) {
-            String name = ev.getName();
-            if ("updateContact".equals(name)) {
-                Contact c = (Contact) ev.getArguments()[0];
-                List<Contact> v1 = getContactsFor(c.getJid());
-                for (int i = 0;i < v1.size();i++) {
-                    Contact c1 = v1.get(i);
-                    c1.setName(c.getName());
-                    c1.setFoto(c.getFoto());
-                }
+    private GenericListener defaultListener = ev -> {
+        String name = ev.getName();
+        if ("updateContact".equals(name)) {
+            Contact c = (Contact) ev.getArguments()[0];
+            List<Contact> v1 = getContactsFor(c.getJid());
+            for (Contact c1 : v1) {
+                c1.setName(c.getName());
+                c1.setFoto(c.getFoto());
             }
         }
     };
@@ -675,12 +668,12 @@ Debug.println("userName: " + userName);
                 }
                 if (cl.hasOption("c")) {
                      String value = cl.getOptionValue("c");
-                     this.useSSL = new Boolean(value).booleanValue();
+                     this.useSSL = Boolean.valueOf(value);
 Debug.println("useSSL: " + useSSL);
                 }
                 if (cl.hasOption("d")) {
                     String value = cl.getOptionValue("d");
-                    this.usePlainPasswd = new Boolean(value).booleanValue();
+                    this.usePlainPasswd = Boolean.valueOf(value);
 Debug.println("usePlainPasswd: " + usePlainPasswd);
                 }
                 if (cl.hasOption("to")) {
@@ -701,8 +694,8 @@ Debug.println("server: " + this.server + ":" + this.port);
                 }
 
                 String[] commands = cl.getArgs();
-                for (int i = 0; i < commands.length; i++) {
-                    if ("connect".equals(commands[i])) {
+                for (String command : commands) {
+                    if ("connect".equals(command)) {
                         if (server == null || port == 0) {
                             throw new IllegalStateException("not connected");
                         }

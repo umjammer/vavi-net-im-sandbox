@@ -127,7 +127,7 @@ public class Query extends Xmpp {
     //----
 
     /** */
-    List<Item> items = new ArrayList<Item>();
+    List<Item> items = new ArrayList<>();
 
     /** */
     public void addItem(Item item) {

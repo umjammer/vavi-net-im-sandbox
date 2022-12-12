@@ -28,7 +28,7 @@ public class Contact extends Xmpp {
         return "contact";
     }
 
-    List<Group> cgs = new ArrayList<Group>();
+    List<Group> cgs = new ArrayList<>();
     private String entry;
     public void setEntry(String entry) {
         this.entry = entry;
@@ -102,8 +102,7 @@ public class Contact extends Xmpp {
         this.bday = vCard.getBday();
         this.url = vCard.getUrl();
         List<VCard.Tel> tels = vCard.getTels();
-        for (int i = 0; i < tels.size(); i++) {
-            VCard.Tel t = tels.get(i);
+        for (VCard.Tel t : tels) {
             if (t.getVoice() != null) {
                 if (t.getNumber() != null)
                     this.phone = t.getNumber();

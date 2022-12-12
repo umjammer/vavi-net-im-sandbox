@@ -38,7 +38,7 @@ public class Group extends Xmpp {
     }
 
     /** */
-    private Set<Contact> contacts = new HashSet<Contact>();
+    private Set<Contact> contacts = new HashSet<>();
 
     /** */
     public void addContact(Contact contact) {
